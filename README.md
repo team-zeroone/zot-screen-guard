@@ -1,39 +1,132 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# ZOT Screen Guard
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+ZOT Screen Guard is a lightweight Flutter utility designed to streamline cross-platform screenshot prevention. It acts as a unified abstraction over existing native screenshot-blocking solutions, enabling engineering teams to seamlessly enforce content-protection policies across Android, iOS, macOS, and Windows with a single API surface.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
+Web is gracefully ignored (no-op), ensuring smooth multi-platform CI/CD workflows.
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+---
 
-## Features
+## ✨ Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+- **Cross-platform screenshot blocking**  
+  Single API to enable/disable secure-screen modes across supported platforms.
+- **Screen-recording prevention** where available.  
+- **Failsafe logging** for unsupported platforms or runtime exceptions.
+- **Zero configuration** — plug and play.
 
-## Getting started
+---
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+## 📦 Installation
 
-## Usage
+Add the dependency to your `pubspec.yaml`:
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+```yaml
+dependencies:
+  zot_screen_guard:
+    git:
+      url: https://github.com/team-zeroone/zot-screen-guard
+      ref: main
+````
+
+Then import it into your project:
 
 ```dart
-const like = 'sample';
+import 'package:zot_screen_guard/zot_screen_guard.dart';
 ```
 
-## Additional information
+---
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+## 🚀 Usage
+
+### Disable Screenshot Capture
+
+```dart
+await ZOTScreenGuard.disableScreenCapture();
+```
+
+### Enable Screenshot Capture
+
+```dart
+await ZOTScreenGuard.enableScreenCapture();
+```
+
+Both APIs automatically handle:
+
+* Android
+* iOS
+* macOS
+* Windows
+
+Web is safely ignored.
+
+---
+
+## 🛠 Supported Platforms
+
+| Platform | Supported    | Notes                   |
+| -------- | ------------ | ----------------------- |
+| Android  | ✅            | Uses `no_screenshot`    |
+| iOS      | ✅            | Uses `no_screenshot`    |
+| macOS    | ✅            | Uses `no_screenshot`    |
+| Windows  | ✅            | Uses `screenshot_guard` |
+| Web      | 🚫 (ignored) | No secure-screen API     |
+| Linux    | 🚫           | Not supported.           |
+
+---
+
+## 📘 API Reference
+
+### `disableScreenCapture()`
+
+Activates screenshot and screen-recording prevention.
+Includes platform detection and graceful error handling.
+
+### `enableScreenCapture()`
+
+Restores normal screenshot and recording behavior.
+
+---
+
+## 🧩 Example
+
+```dart
+import 'package:zot_screen_guard/zot_screen_guard.dart';
+
+class ExamplePage extends StatefulWidget {
+  @override
+  State<ExamplePage> createState() => _ExamplePageState();
+}
+
+class _ExamplePageState extends State<ExamplePage> {
+  @override
+  void initState() {
+    super.initState();
+    ZOTScreenGuard.disableScreenCapture();
+  }
+
+  @override
+  void dispose() {
+    ZOTScreenGuard.enableScreenCapture();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(child: Text("Secure content area")),
+    );
+  }
+}
+```
+
+---
+
+## 🤝 Contributing
+
+Contributions, enhancements, and issue reports are warmly welcomed.
+
+---
+
+## 📜 License
+
+MIT — fully open for commercial and private use.
