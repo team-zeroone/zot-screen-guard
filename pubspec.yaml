@@ -1,7 +1,7 @@
 name: zot_screen_guard
 description: "A new Flutter package project."
 version: 0.0.1
-homepage:
+homepage: https://github.com/team-zeroone/zot-screen-guard
 
 environment:
   sdk: ^3.10.1
@@ -10,6 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  no_screenshot: ^0.3.2-beta.3
+  screenshot_guard: ^0.0.5
 
 dev_dependencies:
   flutter_test:
